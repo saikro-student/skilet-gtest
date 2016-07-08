@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 2.8)
+
+project("Test_solution_VS_15")
+
+
+
+file(MAKE_DIRECTORY "${PROJECT_SOURCE_DIR}/out/include")
+file(COPY "${PROJECT_SOURCE_DIR}/include/" DESTINATION "${PROJECT_SOURCE_DIR}/out/include")
+
+file(MAKE_DIRECTORY "${PROJECT_SOURCE_DIR}/out/lib/forMDd/")
+file(COPY "${PROJECT_SOURCE_DIR}/lib/forMDd/" DESTINATION "${PROJECT_SOURCE_DIR}/out/lib/forMDd/")
+
+file(MAKE_DIRECTORY "${PROJECT_SOURCE_DIR}/out/lib/forMTd/")
+file(COPY "${PROJECT_SOURCE_DIR}/lib/forMTd/" DESTINATION "${PROJECT_SOURCE_DIR}/out/lib/forMTd/")
+
+file(MAKE_DIRECTORY "${PROJECT_SOURCE_DIR}/out/for_DLL/x32")
+file(MAKE_DIRECTORY "${PROJECT_SOURCE_DIR}/out/for_DLL/x64")
+
+INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/out/include/") # BEFORE making project
+
+
+# 	"${PROJECT_SOURCE_DIR}/out/lib/forMDd/"  # if VS configure for MD ( C/C++ -> Code Generation -> Runtime Library )
+#	"${PROJECT_SOURCE_DIR}/out/lib/forMTd/"  # if VS configure for MT
+
+
+link_directories("${PROJECT_SOURCE_DIR}/out/lib/forMDd/") # in aditional dependencies linker general # BEFORE making project
+
+#get_directory_property(_my_link_dirs LINK_DIRECTORIES)
+#message(STATUS "_my_link_dirs = ${_my_link_dirs}")    # show added path
+ 
+
+set(SOURCE_EXE main.cpp ProgramInfo.h ProgramInfo.cpp)
+add_executable(Test_solution_VS_15 ${SOURCE_EXE})
+
+# add lib for dependencies in properties project (Linker Input) !!! AFTER making project
+TARGET_LINK_LIBRARIES(Test_solution_VS_15 PUBLIC gtestd.lib gtest_main-mdd.lib gmock.lib gmock_main.lib) 

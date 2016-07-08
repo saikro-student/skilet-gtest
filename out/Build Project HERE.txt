@@ -1,0 +1,3 @@
+download & configure cmake: https://cmake.org/download/
+open cmd and change location in folder out
+write for Visual studio 2015 in cmd: cmake -g "Visual Studio 14 2015" ..
